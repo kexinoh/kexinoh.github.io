@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xiangfan Wu - Security Research Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', 'sans-serif';
+            background-color: transparent; 
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem;
+            padding-bottom: 2rem;
+            border-left: 2px solid #e2e8f0;
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -0.5rem;
+            top: 0.25rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            background-color: #3b82f6;
+            border: 2px solid #ffffff;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+    <style>
+  .digit-wheel {
+    position: relative;
+    overflow: hidden;
+    line-height: 1;
+    display: inline-flex;
+    height: 1em;
+    width: 0.65em;
+  }
+  .digit-stack {
+    display: flex;
+    flex-direction: column;
+    transform: translateY(0);
+    will-change: transform;
+  }
+  .digit {
+    display: block;
+    height: 1em;
+    line-height: 1;
+  }
+  .digit-stack {
+    transition: transform 1.2s cubic-bezier(.2,.8,.2,1);
+  }
+  .digit-plus {
+    width: auto;
+    padding-left: .1em;
+  }
+</style>
+
+</head>
+
+<body class="text-slate-700 antialiased relative">
+
+    <div id="vanta-bg" class="fixed inset-0 -z-10 w-full h-full pointer-events-none"></div>
+
+    <div class="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
+
+        <header id="header" class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
+                Security Research Portfolio
+            </h1>
+            <p class="mt-4 text-lg text-slate-600">Vulnerability Discovery & Analysis</p>
+        </header>
+
+        <main>
+
+            <section id="intro" class="mb-16 text-center">
+                <div class="max-w-4xl mx-auto bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-md">
+                    <h2 class="text-3xl font-bold text-slate-900">Xiangfan Wu</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg leading-relaxed text-slate-600">
+                        Focused on research and practice in cryptography, cache & integrity, and denial-of-service security. Through automated tool development and systematic vulnerability analysis, dedicated to discovering and solving core security issues in complex systems.
+                    </p>
+                    <div class="mt-6 flex items-center justify-center gap-6">
+                        <a href="https://github.com/kexinoh" target="_blank" rel="noopener noreferrer" class="flex items-center text-slate-700 hover:text-blue-600 transition-colors">
+                            <i class="fab fa-github fa-fw text-2xl"></i>
+                            <span class="ml-2 font-semibold">kexinoh</span>
+                        </a>
+                        <a href="mailto:findmykexin@gmail.com" class="flex items-center text-slate-700 hover:text-blue-600 transition-colors">
+                            <i class="fas fa-envelope fa-fw text-2xl"></i>
+                            <span class="ml-2 font-semibold">findmykexin@gmail.com</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="background" class="mb-20 grid md:grid-cols-2 gap-8">
+                <div class="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6 border-l-4 border-blue-500 pl-4">Education</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-bold text-slate-700">Ocean University of China</p>
+                            <p class="text-slate-500">M.S. in Computer Science (2023/09 - 2026/06)</p>
+                            <p class="mt-1 text-sm text-slate-600">Research: Reinforcement Learning, High-Performance Computing, etc.</p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-200">
+                            <p class="font-bold text-slate-700">Hainan University</p>
+                            <p class="text-slate-500">B.S. in Cryptography (2019/09 - 2023/06)</p>
+                             <p class="mt-1 text-sm text-slate-600">Research: Cryptanalysis, Protocol Analysis, Digital Watermarking, etc.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6 border-l-4 border-blue-500 pl-4">Tools & Publications</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-bold text-slate-700">Cryptographic Misuse Static Detector</h3>
+                            <p class="mt-1 text-sm text-slate-600">During an internship at Qi-AnXin Technology Research Institute, developed a static analysis detector for cryptographic misuse based on CodeQL. By analyzing false positive causes and combining cryptographic concepts, achieved SOTA results in detection rate and false positive rate.</p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-200">
+                            <h3 class="font-bold text-slate-700">Academic Publications</h3>
+                             <p class="mt-1 text-sm text-slate-600">AI Infra cache poisoning research has been written and accepted by NDSS 2026 (21/950).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="mb-20">
+                <div class="bg-white/80 backdrop-blur-sm p-8 rounded-2xl">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-8 border-l-4 border-blue-500 pl-4">My Research Journey</h2>
+                    <div class="max-w-3xl">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <time class="mb-1 text-sm font-semibold uppercase text-slate-500">June 2023 - Cryptographic Security</time>
+                            <h3 class="text-xl font-semibold text-slate-800 mt-1">Automated Scanning & Protocol Analysis</h3>
+                            <p class="text-base font-normal text-slate-600 mt-2">During an internship at Qi-AnXin Technology Research Institute, under the guidance of mentor Lingyun Ying, focused on cryptographic security and developed automated cryptographic misuse scanning tools. By improving scanning principles, introducing the concept of cross-entropy, and collecting misuse rules, achieved SOTA results on test sets and discovered security vulnerabilities in multiple products including WeChat, Alipay, and Baidu mini-programs.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <time class="mb-1 text-sm font-semibold uppercase text-slate-500">November 2024 - Cache & Integrity</time>
+                            <h3 class="text-xl font-semibold text-slate-800 mt-1">AI Infrastructure Security</h3>
+                            <p class="text-base font-normal text-slate-600 mt-2">Extended research focus to cache and integrity security in AI infrastructure. In-depth analysis and discovery of multiple critical vulnerabilities including vLLM prefix cache poisoning, vLLM multimodal cache poisoning, and SGLang multimodal poisoning. This vulnerability is the first to achieve manipulation of others' LLM sessions without obtaining permissions.</p>
+                            <p class="text-base font-normal text-slate-600 mt-2">🎉 October 22nd, this research has been accepted by NDSS 2026 (direct acceptance rate 21/950). 🎉</p>
+                            <p class="mt-2">
+                                <a href="./cache_show.html" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                                    → Click here for interactive vulnerability demonstration
+                                </a>
+                            </p>
+                            </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <time class="mb-1 text-sm font-semibold uppercase text-slate-500">March 2025 - Denial of Service (DoS)</time>
+                            <h3 class="text-xl font-semibold text-slate-800 mt-1">LLM-Assisted Complexity Analysis</h3>
+                            <p class="text-base font-normal text-slate-600 mt-2">Systematically utilized LLMs to analyze and detect time complexity-related DoS vulnerabilities. This work has achieved significant progress, successfully discovering 21 DoS defects in CPython and multiple defects in JDK (4 disclosed).</p>
+                            <p class="text-base font-normal text-slate-600 mt-2">🎉 October 30th, PSRC released the first CVE of this vulnerability series (CVE-2025-6075) 🎉</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <time class="mb-1 text-sm font-semibold uppercase text-slate-500">August 2025 - Multimodal Semantic Loading Differences</time>
+                            <h3 class="text-xl font-semibold text-slate-800 mt-1">Agent Fuzz AI Critical Infrastructure</h3>
+                            <p class="text-base font-normal text-slate-600 mt-2">Systematically exploited differences between multimodal loading pipelines and normal media viewing in AI infrastructure. This lays the foundation for modern LLM attacks such as information misdirection and prompt injection. Audio downmix differences led to modifications in the Librosa audio library.</p>
+                            <p class="text-base font-normal text-slate-600 mt-2">This paper has been submitted to S&P 2026.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="vllm-focus" class="mb-20 bg-slate-100/90 backdrop-blur-sm rounded-2xl p-8 lg:p-12">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-slate-800 border-l-4 border-indigo-500 pl-4">vLLM & AI Infra Vulnerabilities</h2>
+                        <p class="mt-4 text-lg text-slate-600">
+                            vLLM is one of the most popular open-source large model inference frameworks in the community. Through systematic security analysis, I discovered multiple cache poisoning and integrity vulnerabilities in vLLM. These vulnerabilities can cause attackers to manipulate victims' model outputs through cache contamination without obtaining permissions, achieving new cross-session prompt injection attacks.
+                        </p>
+                        <div class="mt-8 flex items-center gap-8">
+                            <div class="text-center">
+                                <div id="vllm-odometer" data-target="12" class="flex items-baseline"></div>
+                                <p class="text-sm text-slate-500 mt-2">Total Vulnerabilities Discovered</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container h-64 sm:h-80">
+                        <canvas id="vllmChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="vulnerabilities" class="mb-20">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-slate-800 border-l-4 border-blue-500 pl-4">Vulnerability Database</h2>
+                    <p id="vulnerability-count" class="mt-4 sm:mt-0 text-slate-500"></p>
+                </div>
+                <div id="filters" class="flex flex-wrap gap-2 mb-8 justify-center sm:justify-start">
+                    <button data-filter="all" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold shadow-sm transition-all bg-blue-500 text-white">All</button>
+                    <button data-filter="Cryptography" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold shadow-sm transition-all bg-white text-slate-700 hover:bg-slate-100">Cryptography</button>
+                    <button data-filter="DoS" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold shadow-sm transition-all bg-white text-slate-700 hover:bg-slate-100">DoS</button>
+                    <button data-filter="Cache & Integrity" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold shadow-sm transition-all bg-white text-slate-700 hover:bg-slate-100">Cache & Integrity</button>
+                    <button data-filter="Miscellaneous" class="filter-btn px-4 py-2 rounded-full text-sm font-semibold shadow-sm transition-all bg-white text-slate-700 hover:bg-slate-100">Miscellaneous</button>
+                </div>
+                <div id="vulnerability-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </section>
+
+        </main>
+
+        <footer class="text-center text-slate-500 mt-16 pt-8 border-t border-slate-200">
+            <p>&copy; 2024-2025 Xiangfan Wu. All rights reserved.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        VANTA.GLOBE({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x3b82f6,
+            color2: 0x6366f1,
+            size: 1.00,
+            backgroundColor: 0xf1f5f9
+        })
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const vulnerabilities = [
+                { id: 'WX-001', title: 'WeChat Mini-Program Crypto Misuse', category: 'Cryptography', description: 'Discovered security vulnerabilities in WeChat mini-program cryptographic implementation, including weak encryption algorithms and improper key management.', link: '' },
+                { id: 'ALI-001', title: 'Alipay SDK Crypto Flaw', category: 'Cryptography', description: 'Identified cryptographic misuse in Alipay SDK, involving insecure random number generation and encryption mode selection issues.', link: '' },
+                { id: 'BD-001', title: 'Baidu App Crypto Issue', category: 'Cryptography', description: 'Found cryptographic vulnerabilities in Baidu app, including hardcoded keys and weak hash algorithms.', link: '' },
+                { id: 'vLLM-8772', title: 'vLLM Prefix Cache Poisoning', category: 'Cache & Integrity', description: 'By constructing specific prompts, an attacker can pollute the prefix cache, causing subsequent users\' requests to be contaminated and achieving cross-session prompt injection.', link: 'https://github.com/vllm-project/vllm/issues/8772' },
+                { id: 'vLLM-11251', title: 'vLLM Phi4-MM Cache Poisoning', category: 'Cache & Integrity', description: 'A cache poisoning attack targeting the Phi4 multimodal model, exploiting multimodal input processing logic flaws to achieve model output manipulation.', link: 'https://github.com/vllm-project/vllm/issues/11251' },
+                { id: 'vLLM-18168', title: 'vLLM Audio DoS', category: 'DoS', description: 'By constructing malicious audio input, the vLLM service can be caused to consume excessive resources, leading to denial of service.', link: 'https://github.com/vllm-project/vllm/issues/18168' },
+                { id: 'vLLM-18170', title: 'vLLM Video DoS', category: 'DoS', description: 'Discovered a denial of service vulnerability in video processing, where attackers can crash the service by uploading crafted video files.', link: 'https://github.com/vllm-project/vllm/issues/18170' },
+                { id: 'vLLM-18172', title: 'vLLM Image DoS', category: 'DoS', description: 'Image processing module exists a denial of service vulnerability where specific image formats can cause excessive memory consumption.', link: 'https://github.com/vllm-project/vllm/issues/18172' },
+                { id: 'SGLang-4614', title: 'SGLang Multimodal Poisoning', category: 'Cache & Integrity', description: 'Discovered a multimodal cache poisoning vulnerability in the SGLang framework, similar to vLLM issues but with different attack vectors.', link: 'https://github.com/sgl-project/sglang/issues/4614' },
+                { id: 'SGLang-4616', title: 'SGLang Video DoS', category: 'DoS', description: 'SGLang framework video processing module denial of service vulnerability that can cause service unavailability.', link: 'https://github.com/sgl-project/sglang/issues/4616' },
+                { id: 'CPython-GH-001', title: 'CPython ReDoS Series', category: 'DoS', description: 'Systematically discovered 21 regular expression denial of service vulnerabilities in the CPython standard library, involving multiple commonly used modules.', link: '' },
+                { id: 'CVE-2025-6075', title: 'JDK Time Complexity DoS', category: 'DoS', description: 'Discovered time complexity-related denial of service vulnerabilities in JDK, exploiting algorithmic complexity issues under specific inputs.', link: '' },
+                { id: 'Librosa-001', title: 'Librosa Audio Downmix Diff', category: 'Miscellaneous', description: 'Discovered audio downmix processing differences in the Librosa library that may lead to inconsistent results in AI systems.', link: '' },
+                { id: 'vLLM-MM-001', title: 'vLLM Multimodal Loading Diff', category: 'Miscellaneous', description: 'Discovered loading differences between multimodal inputs and normal media viewers that can be exploited for prompt injection attacks.', link: '' },
+            ];
+
+            const grid = document.getElementById('vulnerability-grid');
+            const filters = document.getElementById('filters');
+            const countElement = document.getElementById('vulnerability-count');
+            let currentFilter = 'all';
+
+            const renderVulnerabilities = () => {
+                grid.innerHTML = '';
+                const filtered = vulnerabilities.filter(v => currentFilter === 'all' || v.category === currentFilter);
+
+                countElement.textContent = `Total: ${filtered.length}`;
+
+                filtered.forEach(vuln => {
+                    const card = document.createElement('div');
+                    card.className = 'bg-white/95 backdrop-blur-sm rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col border border-slate-200';
+
+                    let linkHtml = vuln.link
+                        ? `<a href="${vuln.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-blue-500 hover:text-blue-700 font-semibold text-sm group">
+                             View Details
+                             <span class="ml-1 transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
+                           </a>`
+                        : `<span class="text-sm text-slate-400">No public link</span>`;
+
+                    let categoryColor = 'blue';
+                    if (vuln.category === 'DoS') categoryColor = 'rose';
+                    if (vuln.category === 'Cache & Integrity') categoryColor = 'indigo';
+                    if (vuln.category === 'Miscellaneous') categoryColor = 'amber';
+
+                    card.innerHTML = `
+                        <div class="p-6 flex-grow">
+                            <div class="uppercase tracking-wide text-sm text-${categoryColor}-500 font-semibold">${vuln.category}</div>
+                            <h3 class="block mt-1 text-lg leading-tight font-bold text-slate-900">${vuln.title}</h3>
+                            <p class="mt-2 text-slate-600 text-sm flex-grow">${vuln.description}</p>
+                        </div>
+                        <div class="p-4 bg-slate-50/50 border-t border-slate-100">
+                            <div class="flex justify-between items-center">
+                                 <p class="font-semibold text-slate-600 text-xs">ID/Issue: ${vuln.id}</p>
+                                 ${linkHtml}
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            };
+
+            filters.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    currentFilter = e.target.dataset.filter;
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('bg-blue-500', 'text-white');
+                        btn.classList.add('bg-white', 'text-slate-700');
+                    });
+                    e.target.classList.add('bg-blue-500', 'text-white');
+                    e.target.classList.remove('bg-white', 'text-slate-700');
+                    renderVulnerabilities();
+                }
+            });
+
+            // vLLM Chart setup
+            const vllmVulns = vulnerabilities.filter(v => v.title.toLowerCase().includes('vllm') || v.title.toLowerCase().includes('phi4mm'));
+            const vllmByCategory = vllmVulns.reduce((acc, vuln) => {
+                acc[vuln.category] = (acc[vuln.category] || 0) + 1;
+                return acc;
+            }, {});
+
+            const chartLabels = ['Cryptography', 'DoS', 'Cache & Integrity', 'Miscellaneous'];
+            const chartData = chartLabels.map(label => vllmByCategory[label] || 0);
+
+            const ctx = document.getElementById('vllmChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'Vulnerabilities',
+                        data: chartData,
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)',
+                            'rgba(239, 68, 68, 0.8)',
+                            'rgba(99, 102, 241, 0.8)',
+                            'rgba(245, 158, 11, 0.8)',
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Initial Render
+            renderVulnerabilities();
+        });
+    </script>
+
+   <script>
+(function () {
+  const root = document.getElementById('vllm-odometer');
+  if (!root) return;
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const targetValue = String(root.getAttribute('data-target') || '12');
+  const fontClasses = 'text-5xl font-extrabold text-blue-600 leading-none';
+
+  const plannedExtraRounds = Array.from(targetValue).filter(ch => /\d/.test(ch)).map((_, idx) => 1 + idx);
+  const maxExtraRounds = plannedExtraRounds.length ? Math.max(...plannedExtraRounds) : 0;
+  const baseRepeatRounds = 5;
+
+  function createWheel(targetDigit, repeatRounds, maxExtra) {
+    const wheel = document.createElement('div');
+    wheel.className = `digit-wheel ${fontClasses}`;
+    const stack = document.createElement('div');
+    stack.className = 'digit-stack';
+
+    const totalDigits = (repeatRounds + maxExtra) * 10 + 10;
+
+    for (let i = 0; i < totalDigits; i++) {
+      const d = document.createElement('span');
+      d.className = 'digit';
+      d.textContent = String(i % 10);
+      stack.appendChild(d);
+    }
+    wheel.appendChild(stack);
+
+    function measureH() {
+      const first = stack.children[0];
+      let h = first ? first.getBoundingClientRect().height : 0;
+      if (!h) h = first ? first.offsetHeight : 0;
+      return h || wheel.getBoundingClientRect().height || 0;
+    }
+
+    wheel.spinTo = function (digit, opts = {}) {
+      const { duration = 1200, extraRounds = 0, delay = 0 } = opts;
+      const digitH = measureH();
+      const wanted = (repeatRounds + extraRounds) * 10 + (digit % 10);
+      const maxSteps = totalDigits - 1;
+      const steps = Math.min(wanted, maxSteps);
+
+      stack.style.transition = `transform ${duration}ms cubic-bezier(.2,.8,.2,1) ${delay}ms`;
+      stack.style.transform = `translateY(${-steps * digitH}px)`;
+    };
+
+    wheel.instantSet = function (digit) {
+      const digitH = measureH();
+      const steps = repeatRounds * 10 + (digit % 10);
+      stack.style.transition = 'none';
+      stack.style.transform = `translateY(${-steps * digitH}px)`;
+    };
+
+    wheel.instantSet(0);
+    return wheel;
+  }
+
+  function buildOdometer(valueStr, { repeatRounds, maxExtraRounds }) {
+    root.innerHTML = '';
+    const wheels = [];
+    for (const ch of valueStr) {
+      if (/\d/.test(ch)) {
+        const wheel = createWheel(Number(ch), repeatRounds, maxExtraRounds);
+        root.appendChild(wheel);
+        wheels.push({ wheel, target: Number(ch) });
+      } else if (ch === '+') {
+        const plus = document.createElement('span');
+        plus.className = `digit-plus ${fontClasses}`;
+        plus.textContent = '+';
+        root.appendChild(plus);
+      } else {
+        const span = document.createElement('span');
+        span.className = fontClasses;
+        span.textContent = ch;
+        root.appendChild(span);
+      }
+    }
+    return wheels;
+  }
+
+  const wheels = buildOdometer(targetValue, { repeatRounds: baseRepeatRounds, maxExtraRounds });
+
+  function startSpin() {
+    if (!wheels.length) return;
+    if (prefersReduced) {
+      wheels.forEach(({ wheel, target }) => wheel.instantSet(target));
+      return;
+    }
+    wheels.forEach(({ wheel, target }, idx) => {
+      const extraRounds = plannedExtraRounds[idx] || 0;
+      const duration = 900 + idx * 300;
+      const delay = 100 + idx * 120;
+
+      wheel.spinTo(Math.floor(Math.random() * 10), { duration: 500, extraRounds: 0, delay: 0 });
+      setTimeout(() => {
+        wheel.spinTo(target, { duration, extraRounds, delay: 0 });
+      }, 520 + idx * 80);
+    });
+  }
+
+  let started = false;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!started && entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+        started = true;
+        requestAnimationFrame(() => setTimeout(startSpin, 0));
+        io.disconnect();
+      }
+    });
+  }, { threshold: [0, 0.4, 1] });
+
+  io.observe(root);
+})();
+</script>
+
+
+</body>
+
+</html>
