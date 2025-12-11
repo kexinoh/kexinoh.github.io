@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xiangfan Wu - Security Research Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', 'sans-serif';
+            /* Background handled by Vanta, set to transparent or fallback here */
+            background-color: transparent; 
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem;
+            padding-bottom: 2rem;
+            border-left: 2px solid #e2e8f0; /* slate-200 */
+        }
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -0.5rem;
+            top: 0.25rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 9999px;
+            background-color: #3b82f6; /* blue-500 */
+            border: 2px solid #ffffff;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+    <style>
+  /* Single wheel container for odometer (adapts to font size) */
+  .digit-wheel {
+    position: relative;
+    overflow: hidden;
+    line-height: 1;
+    display: inline-flex;
+    height: 1em;            /* Linked to font size */
+    width: 0.65em;          /* Width adjustment for font */
+  }
+  /* Vertical digit stack container */
+  .digit-stack {
+    display: flex;
+    flex-direction: column;
+    transform: translateY(0);
+    will-change: transform;
+  }
+  /* Digit itself, inherits parent font size and weight */
+  .digit {
+    display: block;
+    height: 1em;            /* Each digit is exactly one em high */
+    line-height: 1;
+  }
+  /* Animation speed/easing set in script per wheel, fallback here */
+  .digit-stack {
+    transition: transform 1.2s cubic-bezier(.2,.8,.2,1);
+  }
+  /* "+" symbol (if needed later) reusable style */
+  .digit-plus {
+    width: auto;
+    padding-left: .1em;
+  }
+</style>
+
+</head>
+
+<body class="text-slate-700 antialiased relative">
+
+    <div id="vanta-bg" class="fixed inset-0 -z-10 w-full h-full pointer-events-none"></div>
+
+    <div class="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
+
+        <header id="header" class="text-center mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
+                Security Research Portfolio
+            </h1>
+            <p class="mt-4 text-lg text-slate-600">Xiangfan Wu</p>
+        </header>
+
+        <main>
+
+            <section id="intro" class="mb-16 text-center">
+                <div class="max-w-4xl mx-auto bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-md">
+                    <h2 class="text-3xl font-bold text-slate-900">Xiangfan Wu</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg leading-relaxed text-slate-600">
+                        Focusing on Cryptography, Cache & Integrity, and Denial of Service security research. Dedicated to discovering and solving core security issues in complex systems through automated tool development and systematic vulnerability analysis.
+                    </p>
+                    <div class="mt-6 flex items-center justify-center gap-6">
+                        <a href="https://github.com/kexinoh" target="_blank" rel="noopener noreferrer" class="flex items-center text-slate-700 hover:text-blue-600 transition-colors">
+                            <i class="fab fa-github fa-fw text-2xl"></i>
+                            <span class="ml-2 font-semibold">kexinoh</span>
+                        </a>
+                        <a href="mailto:findmykexin@gmail.com" class="flex items-center text-slate-700 hover:text-blue-600 transition-colors">
+                            <i class="fas fa-envelope fa-fw text-2xl"></i>
+                            <span class="ml-2 font-semibold">findmykexin@gmail.com</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="background" class="mb-20 grid md:grid-cols-2 gap-8">
+                <div class="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6 border-l-4 border-blue-500 pl-4">Education</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <p class="font-bold text-slate-700">Ocean University of China</p>
+                            <p class="text-slate-500">Master, Computer Science (2023/09 - 2026/06)</p>
+                            <p class="mt-1 text-sm text-slate-600">Research Focus: Reinforcement Learning, HPC, etc.</p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-200">
+                            <p class="font-bold text-slate-700">Hainan University</p>
+                            <p class="text-slate-500">Bachelor, Cryptography (2019/09 - 2023/06)</p>
+                             <p class="mt-1 text-sm text-slate-600">Research Focus: Cryptanalysis, Protocol Analysis, Digital Watermarking, etc.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-sm border border-slate-100">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-6 border-l-4 border-blue-500 pl-4">Tool Development & Publications</h2>
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="font-bold text-slate-700">Cryptographic Misuse Static Detector</h3>
+                            <p class="mt-1 text-sm text-slate-600">During internship at Qi An Xin Technology Research Institute, developed a static analysis detector for cryptographic misuse based on CodeQL. Achieved SOTA results in identification and false positive rates by analyzing false positive causes and incorporating cryptographic concepts.</p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-200">
+                            <h3 class="font-bold text-slate-700">Academic Publications</h3>
+                             <p class="mt-1 text-sm text-slate-600">Paper on AI Infra Cache Poisoning written, accepted by NDSS 2026 (21/950).</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="mb-20">
+                <div class="bg-white/80 backdrop-blur-sm p-8 rounded-2xl">
+                    <h2 class="text-3xl font-bold text-slate-800 mb-8 border-l-4 border-blue-500 pl-4">My Research Journey</h2>
+                    <div class="max-w-3xl">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <time class="mb-1 text-sm font-semibold uppercase text-slate-500">June 2023 - Cryptographic Security</time>
+                            <h3 class="text-xl font-semibold text-slate-800 mt-1">Automated Scanning & Protocol Analysis</h3>
+                            <p class="text-base font-normal text-slate-600 mt-2">During internship at Qi An Xin Technology Research Institute, under the guidance of mentor Lingyun Ying, focused on cryptographic security and developed an automated cryptographic misuse scanning tool. Achieved SOTA results on test sets by improving scanning principles, introducing cross-entropy concepts, and collecting misuse rules, identifying security risks in products like WeChat, Alipay, and Baidu mini-programs.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <time class="mb-1 text-sm font-semibold uppercase text-slate-500">November 2024 - Cache & Integrity</time>
+                            <h3 class="text-xl font-semibold text-slate-800 mt-1">AI Infrastructure Security</h3>
+                            <p class="text-base font-normal text-slate-600 mt-2">Expanded research focus to Cache and Integrity security of AI infrastructure. Deeply analyzed and discovered multiple critical vulnerabilities such as vLLM prefix cache poisoning, vLLM multimodal cache poisoning, and SGLang multimodal poisoning, achieving LLM session manipulation without permission for the first time.</p>
+                            <p class="text-base font-normal text-slate-600 mt-2">🎉 On Oct 22, this research was accepted by NDSS 2026 (Direct Acceptance Rate 21/950). 🎉</p>
+                            <p class="mt-2">
+                                <a href="./cache_show.html" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">
+                                    → Click here for interactive vulnerability demonstration
+                                </a>
+                            </p>
+                            </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <time class="mb-1 text-sm font-semibold uppercase text-slate-500">March 2025 - Denial of Service (DoS)</time>
+                            <h3 class="text-xl font-semibold text-slate-800 mt-1">LLM-Assisted Complexity Analysis</h3>
+                            <p class="text-base font-normal text-slate-600 mt-2">Systematically used LLM to analyze and detect time complexity related DoS vulnerabilities. Significant progress made, successfully discovering 21 DoS defects in CPython and multiple defects in JDK (4 disclosed).</p>
+                            <p class="text-base font-normal text-slate-600 mt-2">🎉 On Oct 30, the first CVE of this series released by PSRC (CVE-2025-6075). 🎉</p>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <time class="mb-1 text-sm font-semibold uppercase text-slate-500">August 2025 - Multimodal Semantic Loading Discrepancies</time>
+                            <h3 class="text-xl font-semibold text-slate-800 mt-1">Agent Fuzz AI Key Infrastructure</h3>
+                            <p class="text-base font-normal text-slate-600 mt-2">Systematically exploited differences in multimodal loading pipelines and normal media viewing in AI infrastructure, laying the foundation for modern LLM attacks like information misleading and prompt injection. Audio Downmix discrepancies prompted audio library Librosa modifications.</p>
+                            <p class="text-base font-normal text-slate-600 mt-2">This paper has been submitted to S&P 2026.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="vllm-focus" class="mb-20 bg-slate-100/90 backdrop-blur-sm rounded-2xl p-8 sm:p-12">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-slate-800 border-l-4 border-blue-500 pl-4">vLLM Special Research</h2>
+                        <p class="mt-4 text-lg text-slate-600">
+                            I have devoted a lot of energy to the vLLM project, actively participating in its threat model design and deeply excavating potential vulnerabilities.
+                        </p>
+                        <div class="mt-6 bg-white rounded-xl shadow-lg p-6 text-center">
+                          <div class="flex justify-center items-baseline gap-1">
+                            <div id="vllm-odometer" class="flex justify-center items-baseline gap-1"
+                                 data-target="15" aria-label="Total Vulnerabilities Found: 15" aria-live="polite">
+                              </div>
+                          </div>
+                          <p class="mt-2 text-lg font-semibold text-slate-800">Total Vulnerabilities Found</p>
+                          <p class="text-sm text-slate-500">9 Disclosed, 1 involving vllm/aibrix, 5 fixing</p>
+                        </div>
+                    </div>
+                    <div>
+                       <h3 class="text-xl font-semibold text-center text-slate-800 mb-4">Disclosed Vulnerabilities Classification</h3>
+                       <div class="chart-container">
+                           <canvas id="vllmChart"></canvas>
+                       </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section id="portfolio">
+                <div class="bg-white/50 backdrop-blur-sm p-6 rounded-2xl mb-8">
+                    <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                        <h2 class="text-3xl font-bold text-slate-800 border-l-4 border-blue-500 pl-4">Vulnerability Dashboard</h2>
+                        <span id="vulnerability-count" class="text-base sm:text-lg font-semibold text-slate-700 bg-slate-200 px-3 py-1 rounded-full"></span>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2" id="filters">
+                        <button data-filter="all" class="filter-btn bg-blue-500 text-white py-2 px-4 rounded-full font-semibold shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all">All</button>
+                        <button data-filter="Cryptography" class="filter-btn bg-white text-slate-700 py-2 px-4 rounded-full font-semibold shadow-md hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all">Cryptography</button>
+                        <button data-filter="DoS" class="filter-btn bg-white text-slate-700 py-2 px-4 rounded-full font-semibold shadow-md hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all">DoS</button>
+                        <button data-filter="Cache & Integrity" class="filter-btn bg-white text-slate-700 py-2 px-4 rounded-full font-semibold shadow-md hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all">Cache & Integrity</button>
+                        <button data-filter="Misc" class="filter-btn bg-white text-slate-700 py-2 px-4 rounded-full font-semibold shadow-md hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-all">Misc</button>
+                    </div>
+                </div>
+
+                <div id="vulnerabilities-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-20 pt-10 border-t border-slate-200 bg-white/80 backdrop-blur-sm rounded-t-2xl pb-10">
+             <div class="flex items-center justify-center gap-6 mb-4">
+                <a href="https://github.com/kexinoh" target="_blank" rel="noopener noreferrer" class="text-slate-500 hover:text-blue-600 transition-colors">
+                    <i class="fab fa-github fa-fw text-xl"></i>
+                </a>
+                <a href="mailto:findmykexin@gmail.com" class="text-slate-500 hover:text-blue-600 transition-colors">
+                    <i class="fas fa-envelope fa-fw text-xl"></i>
+                </a>
+            </div>
+            <p class="text-slate-500">Page optimized & generated by Gemini/ChatGPT5 &copy; 2025</p>
+              <p class="text-slate-500">
+                Last vulnerability report to vLLM, status: accept, undisclosed, in <span id="last-report" data-date="2025-11-6">calculating…</span>
+              </p>
+        </footer>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        try {
+            VANTA.GLOBE({
+                el: "#vanta-bg",
+  mouseControls: true,
+  touchControls: true,
+  gyroControls: false,
+  minHeight: 200.00,
+  minWidth: 200.00,
+  scale: 1.00,
+  scaleMobile: 1.00,
+  color: 0xb0bdbd,
+  color2: 0x7a7aae,
+  size: 1.10,
+  backgroundColor: 0xefefff
+            });
+        } catch (e) {
+            console.error("Vanta effect failed to load:", e);
+        }
+    });
+    </script>
+
+    <script>
+        (() => {
+          "use strict";
+
+          const el = document.getElementById("last-report");
+          if (!el) return;
+
+          // Parse Input Date (Supports Date object, ISO string, YYYY-MM-DD)
+          function parseInputDate(v) {
+            if (v instanceof Date) return v;
+            if (typeof v === "string") {
+              // Compatible with YYYY-MM-DD format as local 00:00
+              const m = v.trim().match(/^(\d{4})-(\d{2})-(\d{2})(?:[ T](\d{2}):(\d{2})(?::(\d{2}))?)?$/);
+              if (m) {
+                const [_, Y, M, D, h = "00", mi = "00", s = "00"] = m;
+                return new Date(Number(Y), Number(M) - 1, Number(D), Number(h), Number(mi), Number(s));
+              }
+              // Other formats handled by native Date
+              const d = new Date(v);
+              if (!isNaN(+d)) return d;
+            }
+            return null;
+          }
+
+          // Uses days/weeks/months/years units, rounding down to nearest large unit
+          function formatDistance(from, to = new Date()) {
+            const diffMs = to - from; // Positive means past, negative means future
+            const absMs  = Math.abs(diffMs);
+
+            const days   = absMs / (1000 * 60 * 60 * 24);
+            const weeks  = days / 7;
+            const months = days / 30.4375; // Average month length
+            const years  = days / 365.25;
+
+            let value, unit;
+
+            if (years >= 1) {
+              value = Math.floor(years);
+              unit  = value === 1 ? "year" : "years";
+            } else if (months >= 1) {
+              value = Math.floor(months);
+              unit  = value === 1 ? "month" : "months";
+            } else if (weeks >= 1) {
+              value = Math.floor(weeks);
+              unit  = value === 1 ? "week" : "weeks";
+            } else {
+              value = Math.max(1, Math.floor(days)); // Less than 1 day treated as 1 day
+              unit  = value === 1 ? "day" : "days";
+            }
+
+            const suffix = diffMs >= 0 ? "ago" : "from now";
+            return `${value} ${unit} ${suffix}`;
+          }
+
+          let baseDate = parseInputDate(el.dataset.date);
+
+          function render() {
+            if (!baseDate || isNaN(+baseDate)) {
+              el.textContent = "Invalid Date";
+              return;
+            }
+            el.textContent = formatDistance(baseDate);
+          }
+
+          render();
+          // Refresh every hour
+          const HOUR = 60 * 60 * 1000;
+          setInterval(render, HOUR);
+
+          window.setLastReportDate = (when) => {
+            const d = parseInputDate(when);
+            if (d) {
+              baseDate = d;
+              render();
+            } else {
+              console.warn("setLastReportDate: Unable to parse date", when);
+            }
+          };
+        })();
+        </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const vulnerabilities = [
+                // Cryptography
+                { id: "N/A", link: null, category: "Cryptography", title: "WeChat Protocol Vulnerability", description: "Found `iv=key` usage in WeChat callback protocol, leading to key leakage under CCA." },
+                { id: "N/A", link: null, category: "Cryptography", title: "Alipay Certificate Management Vulnerability", description: "Alipay certificate management uses MD5 as keys; due to MD5 collision, attackers can construct malicious certificates for MITM." },
+                { id: "N/A", link: null, category: "Cryptography", title: "Alibaba Key Management Vulnerability", description: "Alibaba key management system uses pseudo-random numbers for IV, making IV predictable and reducing encryption strength." },
+                { id: "N/A", link: null, category: "Cryptography", title: "Baidu Mini-program Encryption Vulnerability", description: "Found `iv=key` usage in Baidu mini-programs, allowing key recovery under CCA, and IV itself may be leaked." },
+                { id: "PR #6161", link: "https://github.com/2dust/v2rayN/pull/6161", category: "Cryptography", title: "v2rayN Encryption Tool Upgrade", description: "`DesUtils` in v2rayN client replaced by safer `AesUtils`, upgrading to AES encryption." },
+                { id: "PR #7092", link: "https://github.com/halo-dev/halo/pull/7092", category: "Cryptography", title: "Halo Email Hash Upgrade", description: "Halo blog system replaced commenter email hash algorithm from MD5 to safer SHA-256, reducing collision risk." },
+                { id: "PR #2008", link: "https://github.com/rqlite/rqlite/pull/2008", category: "Cryptography", title: "rqlite MD5 Upgrade", description: "rqlite's MD5 hash implementation upgraded to SHA-256, enhancing data integrity protection and hash efficiency." },
+                { id: "CVE-2025-24783", link: "https://www.cve.org/CVERecord?id=CVE-2025-24783", category: "Cryptography", title: "Apache Cocoon Weak Randomness", description: "Apache Cocoon's PRNG uses startup time as seed for continuation IDs, allowing attackers to predict IDs and access unauthorized sessions." },
+                { id: "Apache Hertzbeat", link: null, category: "Cryptography", title: "Apache Hertzbeat Key Reuse", description: "Apache Hertzbeat's `AesUtil` class incorrectly reuses encryption key as IV in AES-CBC mode, introducing security risks." },
+                { id: "CVE-2025-9604", link: "https://www.cve.org/CVERecord?id=CVE-2025-9604", category: "Cryptography", title: "coze-studio Hardcoded Key", description: "coze-studio ≤ 0.2.4 uses hardcoded keys; can be abused remotely to infer/reuse keys, leading to credential forgery or decryption risks (high complexity)." },
+
+                // DoS
+                { id: "GHSA-j828-28rj-hfhp", link: "https://github.com/advisories/GHSA-j828-28rj-hfhp", category: "DoS", title: "vLLM ReDoS Vulnerability", description: "Multiple ReDoS vulnerabilities in vLLM, malicious input can exhaust CPU resources." },
+                { id: "CVE-2025-48887", link: "https://github.com/advisories/GHSA-w6q7-j642-7c25", category: "DoS", title: "vLLM Parser ReDoS", description: "Complex regex in `pythonic_tool_parser.py` of vLLM has ReDoS vulnerability, leading to exponential time complexity." },
+                { id: "GHSA-vc6m-hm49-g9qg", link: "https://github.com/advisories/GHSA-vc6m-hm49-g9qg", category: "DoS", title: "phi4mm Time Complexity Vulnerability", description: "phi4mm (related to vLLM) has quadratic time complexity in input token processing, potentially leading to DoS." },
+                { id: "CVE-2024-52804", link: "https://github.com/advisories/GHSA-8w49-h785-mj3c", category: "DoS", title: "Tornado Cookie Parsing DoS", description: "Quadratic complexity in Tornado's HTTP cookie parsing algorithm, malicious cookies can cause high CPU consumption." },
+                { id: "Issue #134873", link: "https://github.com/python/cpython/issues/134873", category: "DoS", title: "CPython 21 DoS Defects", description: "21 quadratic complexity DoS vulnerabilities found in CPython's `email` library and other modules." },
+                { id: "CVE-2025-6075", link: "https://github.com/advisories/GHSA-vc2m-m665-8xm2", category: "DoS", title: "Python os.path.expandvars Quadratic DoS", description: "`os.path.expandvars()` can exhibit quadratic complexity when expanding environment variables with user-controlled templates, causing resource exhaustion and DoS." },
+                { id: "JDK-8359758", link: "https://bugs.java.com/bugdatabase/view_bug?bug_id=JDK-8359758", category: "DoS", title: "JDK JNDI DoS", description: "JDK JNDI component has resource exhaustion vulnerability when processing malicious LDAP URLs, making applications unresponsive." },
+                { id: "JDK-8359258", link: "https://bugs.java.com/bugdatabase/view_bug?bug_id=JDK-8359258", category: "DoS", title: "JDK HTTP/2 DoS", description: "Resource management defect in JDK's HTTP/2 protocol implementation can lead to server memory exhaustion." },
+                { id: "JDK-8358550", link: "https://bugs.java.com/bugdatabase/view_bug?bug_id=JDK-8358550", category: "DoS", title: "JDK TLS/SSL DoS", description: "DoS issue in JDK TLS/SSL handshake, malformed messages can cause CPU spike or crash." },
+                { id: "JDK-8358549", link: "https://bugs.java.com/bugdatabase/view_bug?bug_id=JDK-8358549", category: "DoS", title: "JDK http Module DoS", description: "Time-based DoS vulnerability in JDK's `java.net.http` module, malicious headers can exhaust resources." },
+
+                // Cache & Integrity
+                { id: "GHSA-rm76-4mrf-v9r8", link: "https://github.com/advisories/GHSA-rm76-4mrf-v9r8", category: "Cache & Integrity", title: "vLLM Prefix Cache Poisoning", description: "vLLM uses Python 3.12 built-in `hash()`, potentially leading to predictable hash collisions in prefix cache." },
+                { id: "CVE-2025-46722", link: "https://github.com/advisories/GHSA-c65p-x677-fgj6", category: "Cache & Integrity", title: "vLLM MultiModalHasher Vulnerability", description: "vLLM image hash implementation ignores metadata, possibly causing hash collisions for images of different sizes and cache errors." },
+                { id: "issues#8342", link: "https://github.com/sgl-project/sglang/issues/8342", category: "Cache & Integrity", title: "SGLang Multimodal Collision", description: "SGLang CPU hash truncation leads to insufficient security, and GPU hash uses xxhash64 which is prone to collision." },
+                { id: "CVE-2024-47829", link: "https://github.com/advisories/GHSA-8cc4-rfj6-fhg4", category: "Cache & Integrity", title: "pnpm Path Conflict Vulnerability", description: "Defect in pnpm's md5 path shortening function can lead to path conflicts and indirect package overwrites." },
+                { id: "CVE-2024-55885", link: "https://github.com/advisories/GHSA-9j3m-fr7q-jxfw", category: "Cache & Integrity", title: "Beego Cache Hash Collision", description: "Beego uses MD5 for cache key filenames, risking hash collisions that can cause data overwrite or leakage." },
+                { id: "Issue #995", link: "https://github.com/Tencent/cherry-markdown/issues/995", category: "Cache & Integrity", title: "Cherry Markdown Cache Poisoning", description: "Cherry Markdown engine used MD5 as cache hash, risking collision attacks and cache pollution." },
+                { id: "N/A", link: null, category: "Cache & Integrity", title: "mlflow Dataset Overwrite", description: "mlflow uses md5 for dataset folders, possibly leading to file path conflicts and data overwrites for different datasets." },
+                { id: "huntr #da06360c", link: "https://huntr.com/bounties/da06360c-87c3-4ba9-be67-29f6eff9d44a", category: "Cache & Integrity", title: "Sagemaker Configuration Reuse", description: "Sagemaker uses md5 for unique vulnerability tagging." },
+                { id: "N/A", link: null, category: "Cache & Integrity", title: "rtp-llm Prefix Cache Issue", description: "Prefix cache related issues found in rtp-llm, potentially affecting performance or data consistency." },
+                { id: "aibrix Issue #749", link: "https://github.com/vllm-project/aibrix/issues/749", category: "Cache & Integrity", title: "aibrix xxhash64 Collision Risk", description: "xxhash64 used in aibrix clusters has hash collision risks, potentially affecting cache correctness." },
+
+
+                // Misc
+                { id: "CVE-2025-32444", link: "https://github.com/advisories/GHSA-hj4w-hm2g-p6w5", category: "Misc", title: "vLLM Mooncake RCE", description: "vLLM Mooncake integration uses pickle serialization on insecure ZeroMQ sockets, leading to RCE." },
+                { id: "CVE-2025-30202", link: "https://github.com/advisories/GHSA-9f8f-2vmf-885j", category: "Misc", title: "vLLM ZeroMQ Data Exposure", description: "ZeroMQ in multi-node vLLM deployment may expose data, unauthorized clients can connect and receive internal status." },
+                { id: "GHSA-3f6c-7fw2-ppm4", link: "https://github.com/vllm-project/vllm/security/advisories/GHSA-3f6c-7fw2-ppm4", category: "Misc", title: "vLLM — MediaConnector SSRF", description: "SSRF in vLLM MediaConnector allows requests to arbitrary addresses, potentially used for internal network probing or accessing sensitive interfaces."} ,
+                { id: "GHSA-527m-2xhr-j27g", link: "https://github.com/hiyouga/LLaMA-Factory/security/advisories/GHSA-527m-2xhr-j27g", category: "Misc", title: "LLaMA-Factory — Chat API SSRF & LFI", description: "Critical SSRF & LFI in LLaMA-Factory Chat API, attackers can trigger remote requests or read local files."} ,
+                 { id: "CVE-2025-10772", link: "https://nvd.nist.gov/vuln/detail/CVE-2025-10772", category: "Misc", title: "HuggingFace LeRobot ZeroMQ Missing Auth", description: "Missing authentication in ZeroMQ Socket Handler of HuggingFace LeRobot ≤0.3.3, allowing unauthorized requests from LAN."} ,
+                { id: "issue#2547", link: "https://github.com/brython-dev/brython/issues/2547", category: "Misc", title: "Brython http/cookies.py DoS", description: "Security vulnerability in Brython's `http/cookies.py` module causing DoS." },
+                { id: "N/A", link: null, category: "Misc", title: "Soul App Business Logic Vulnerability", description: "Found business logic vulnerability in Soul App's new user invitation activity." },
+                { id: "N/A", link: null, category: "Misc", title: "Tencent Yuanbao App Logic Defect", description: "Found logic defect in Tencent Yuanbao App where paid articles are accessed by default without warning." },
+                { id: "Issue #784", link: "https://github.com/ModelTC/lightllm/issues/784", category: "Misc", title: "lightllm Pickle Deserialization RCE", description: "Implicit Pickle deserialization via `zmq.Socket.recv_pyobj` leads to RCE." },
+                { id: "N/A", link: null, category: "Misc", title: "Alibaba/rtp-llm Data Leakage", description: "Defect in rtp-llm communication protocol may lead to internal data leakage to unauthorized participants or DoS." },
+                { id: "N/A", link: null, category: "Misc", title: "Baidu PaddlePaddle RCE", description: "RCE issue in Baidu PaddlePaddle framework." }
+            ];
+
+            const grid = document.getElementById('vulnerabilities-grid');
+            const filters = document.getElementById('filters');
+            const countElement = document.getElementById('vulnerability-count');
+            let currentFilter = 'all';
+
+            const renderVulnerabilities = () => {
+                grid.innerHTML = '';
+                const filtered = vulnerabilities.filter(v => currentFilter === 'all' || v.category === currentFilter);
+
+                countElement.textContent = `Total ${filtered.length} items`;
+
+                filtered.forEach(vuln => {
+                    const card = document.createElement('div');
+                    // bg-white/95 and backdrop-blur
+                    card.className = 'bg-white/95 backdrop-blur-sm rounded-xl shadow-md overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col border border-slate-200';
+
+                    let linkHtml = vuln.link
+                        ? `<a href="${vuln.link}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-blue-500 hover:text-blue-700 font-semibold text-sm group">
+                             View Details
+                             <span class="ml-1 transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
+                           </a>`
+                        : `<span class="text-sm text-slate-400">No Public Link</span>`;
+
+                    let categoryColor = 'blue';
+                    if (vuln.category === 'DoS') categoryColor = 'rose';
+                    if (vuln.category === 'Cache & Integrity') categoryColor = 'indigo';
+                    if (vuln.category === 'Misc') categoryColor = 'amber';
+
+                    card.innerHTML = `
+                        <div class="p-6 flex-grow">
+                            <div class="uppercase tracking-wide text-sm text-${categoryColor}-500 font-semibold">${vuln.category}</div>
+                            <h3 class="block mt-1 text-lg leading-tight font-bold text-slate-900">${vuln.title}</h3>
+                            <p class="mt-2 text-slate-600 text-sm flex-grow">${vuln.description}</p>
+                        </div>
+                        <div class="p-4 bg-slate-50/50 border-t border-slate-100">
+                            <div class="flex justify-between items-center">
+                                 <p class="font-semibold text-slate-600 text-xs">ID/Issue: ${vuln.id}</p>
+                                 ${linkHtml}
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            };
+
+            filters.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') {
+                    currentFilter = e.target.dataset.filter;
+                    document.querySelectorAll('.filter-btn').forEach(btn => {
+                        btn.classList.remove('bg-blue-500', 'text-white');
+                        btn.classList.add('bg-white', 'text-slate-700');
+                    });
+                    e.target.classList.add('bg-blue-500', 'text-white');
+                    e.target.classList.remove('bg-white', 'text-slate-700');
+                    renderVulnerabilities();
+                }
+            });
+
+            // vLLM Chart setup
+            const vllmVulns = vulnerabilities.filter(v => v.title.toLowerCase().includes('vllm') || v.title.toLowerCase().includes('phi4mm'));
+            const vllmByCategory = vllmVulns.reduce((acc, vuln) => {
+                acc[vuln.category] = (acc[vuln.category] || 0) + 1;
+                return acc;
+            }, {});
+
+            const chartLabels = ['Cryptography', 'DoS', 'Cache & Integrity', 'Misc'];
+            const chartData = chartLabels.map(label => vllmByCategory[label] || 0);
+
+            const ctx = document.getElementById('vllmChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: chartLabels,
+                    datasets: [{
+                        label: 'Vulnerability Count',
+                        data: chartData,
+                        backgroundColor: [
+                            'rgba(59, 130, 246, 0.8)',   // blue-500
+                            'rgba(239, 68, 68, 0.8)',    // red-500
+                            'rgba(99, 102, 241, 0.8)',  // indigo-500
+                            'rgba(245, 158, 11, 0.8)',  // amber-500
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed;
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Initial Render
+            renderVulnerabilities();
+        });
+    </script>
+
+   <script>
+(function () {
+  const root = document.getElementById('vllm-odometer');
+  if (!root) return;
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const targetValue = String(root.getAttribute('data-target') || '12'); // target value
+  const fontClasses = 'text-5xl font-extrabold text-blue-600 leading-none';
+
+  // "Extra rounds" planned: nth digit spins n extra rounds
+  const plannedExtraRounds = Array.from(targetValue).filter(ch => /\d/.test(ch)).map((_, idx) => 1 + idx);
+  const maxExtraRounds = plannedExtraRounds.length ? Math.max(...plannedExtraRounds) : 0;
+  const baseRepeatRounds = 5; // base rounds
+
+  function createWheel(targetDigit, repeatRounds, maxExtra) {
+    const wheel = document.createElement('div');
+    wheel.className = `digit-wheel ${fontClasses}`;
+    const stack = document.createElement('div');
+    stack.className = 'digit-stack';
+
+    // Reserve enough digits for "base rounds + max extra rounds", plus one buffer set
+    const totalDigits = (repeatRounds + maxExtra) * 10 + 10;
+
+    for (let i = 0; i < totalDigits; i++) {
+      const d = document.createElement('span');
+      d.className = 'digit';
+      d.textContent = String(i % 10);
+      stack.appendChild(d);
+    }
+    wheel.appendChild(stack);
+
+    function measureH() {
+      const first = stack.children[0];
+      let h = first ? first.getBoundingClientRect().height : 0;
+      if (!h) h = first ? first.offsetHeight : 0; // fallback
+      return h || wheel.getBoundingClientRect().height || 0;
+    }
+
+    wheel.spinTo = function (digit, opts = {}) {
+      const { duration = 1200, extraRounds = 0, delay = 0 } = opts;
+      const digitH = measureH();
+      // Target steps = (base rounds + extra rounds) * 10 + target digit
+      const wanted = (repeatRounds + extraRounds) * 10 + (digit % 10);
+      // Fallback: cannot exceed available range
+      const maxSteps = totalDigits - 1;
+      const steps = Math.min(wanted, maxSteps);
+
+      stack.style.transition = `transform ${duration}ms cubic-bezier(.2,.8,.2,1) ${delay}ms`;
+      stack.style.transform = `translateY(${-steps * digitH}px)`;
+    };
+
+    wheel.instantSet = function (digit) {
+      const digitH = measureH();
+      const steps = repeatRounds * 10 + (digit % 10);
+      stack.style.transition = 'none';
+      stack.style.transform = `translateY(${-steps * digitH}px)`;
+    };
+
+    wheel.instantSet(0); // initially stop at 0
+    return wheel;
+  }
+
+  function buildOdometer(valueStr, { repeatRounds, maxExtraRounds }) {
+    root.innerHTML = '';
+    const wheels = [];
+    for (const ch of valueStr) {
+      if (/\d/.test(ch)) {
+        const wheel = createWheel(Number(ch), repeatRounds, maxExtraRounds);
+        root.appendChild(wheel);
+        wheels.push({ wheel, target: Number(ch) });
+      } else if (ch === '+') {
+        const plus = document.createElement('span');
+        plus.className = `digit-plus ${fontClasses}`;
+        plus.textContent = '+';
+        root.appendChild(plus);
+      } else {
+        const span = document.createElement('span');
+        span.className = fontClasses;
+        span.textContent = ch;
+        root.appendChild(span);
+      }
+    }
+    return wheels;
+  }
+
+  const wheels = buildOdometer(targetValue, { repeatRounds: baseRepeatRounds, maxExtraRounds });
+
+  function startSpin() {
+    if (!wheels.length) return;
+    if (prefersReduced) {
+      wheels.forEach(({ wheel, target }) => wheel.instantSet(target));
+      return;
+    }
+    wheels.forEach(({ wheel, target }, idx) => {
+      const extraRounds = plannedExtraRounds[idx] || 0; // correspond to reserved capacity
+      const duration = 900 + idx * 300;
+      const delay = 100 + idx * 120;
+
+      // Random shake first
+      wheel.spinTo(Math.floor(Math.random() * 10), { duration: 500, extraRounds: 0, delay: 0 });
+      // Then lock target
+      setTimeout(() => {
+        wheel.spinTo(target, { duration, extraRounds, delay: 0 });
+      }, 520 + idx * 80);
+    });
+  }
+
+  // Start when entering viewport; add delay to let browser finish layout
+  let started = false;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!started && entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+        started = true;
+        requestAnimationFrame(() => setTimeout(startSpin, 0));
+        io.disconnect();
+      }
+    });
+  }, { threshold: [0, 0.4, 1] });
+
+  io.observe(root);
+})();
+</script>
+
+
+</body>
+
+</html>
